@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Quản lý Bình luận{% endblock %}
+
+{% block content %}
+<div class="comments-management">
+    <h2>💬 Quản lý Bình luận của Sinh viên</h2>
+    <a href="/admin" class="btn btn-secondary">← Quay lại trang quản trị</a>
+
+    <div class="comments-list">
+        {% for comment in comments %}
+        <div class="comment-item">
+            <div class="comment-header">
+                <strong>Mã SV: {{ comment.msv }}</strong>
+            </div>
+            <div class="comment-content">
+                {{ comment.cmt|safe }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Trang Sinh Viên{% endblock %}
+
+{% block content %}
+<div class="user-dashboard">
+    <h2>Chào mừng {{ session.user.msv }} đến trang sinh viên</h2>
+    
+    <div class="search-section">
+        <h3>Tìm kiếm thông tin sinh viên</h3>
+        {% if msv%}
+            <h4>kết quả tìm kiếm của : {{msv|safe}}</h4>
+        {% endif%}
+        <form method="POST" action="/search" class="search-form">
+            <input type="text" name="msv" placeholder="Nhập mã sinh viên để tìm kiếm..." required>
+            <button type="submit">Tìm kiếm</button>
+        </form>
+    </div>
+
+    {% if results %}
+    <div class="search-results">
+        <h3>kết quả tìm kiếm:</h3>
+        {% for student in results %}
+        <div class="student-card">
+            <p><strong>Mã SV:</strong> {{ student.msv }}</p>
+            <p><strong>Họ tên:</strong> <span class="user-data">{{ student.hoten|safe }}</span></p>  <!-- XSS HERE -->
+            <p><strong>GPA:</strong> {{ student.gpa }}</p>
+            {% if student.avatar %}
+            <p><strong>Avatar:</strong> {{ student.avatar }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="comment-section">
+        <h3>Để lại bình luận</h3>
+        <form method="POST" action="/comment" class="comment-form">
+            <textarea name="comment" placeholder="Nhập bình luận của bạn..." rows="4" required></textarea>
+            <button type="submit">Gửi bình luận</button>
+        </form>
+    </div>
+
+    {% if message%}
+        <h2>{{message}}</h2>
+    {% endif %}
+
+
+    {% if results%}
+        <h3>{{ results }}</h3>
+    {% endif%}
+</div>
+{% endblock %}

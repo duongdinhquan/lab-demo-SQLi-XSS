@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Trang Quản Trị{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard">
+    <h2>📊 Trang Quản Trị Hệ Thống</h2>
+    
+    <div class="admin-actions">
+        <a href="/admin/comments" class="btn btn-primary">Xem tất cả bình luận</a>
+    </div>
+
+    <div class="add-user-section">
+        <h3>thêm sinh viên</h3>
+        <form method="POST" action="/admin/add_user" class="user-form">
+            <input type="text" name="msv" placeholder="Mã sinh viên" required><br>
+            <input type="text" name="passwd" placeholder="mật khẩu" required><br>
+            <input type="text" name="role" placeholder="role" required><br>
+            <input type="text" name="hoten" placeholder="Họ và tên" required><br>
+            <input type="number" name="gpa" step="0.01" min="0" max="4" placeholder="GPA" required><br>
+
+            <button type="submit">thêm sinh viên</button>
+        </form>
+        <h3>xóa sinh viên</h3>
+        <form action="/admin/delete_user" method = "POST" class="user-form">
+            <input type="text" name="msv" placeholder="Mã sinh viên" required>
+            <button type="submit">xóa sinh viên</button>
+        </form>
+    </div>
+
+    <div class="users-list">
+        <h3>Danh sách sinh viên</h3>
+        <table class="users-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Mã SV</th>
+                    <th>Họ tên</th>
+                    <th>GPA</th>
+                    <th>Avatar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.msv }}</td>
+                    <td>{{ user.hoten }}</td>
+                    <td>{{ user.gpa }}</td>
+                    <td>{{ user.avatar or 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
